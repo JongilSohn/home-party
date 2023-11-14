@@ -12,6 +12,10 @@ export default function Home() {
 
   const [isRendered, setIsRendered] = useState(false);
 
+  const [isShowLocation, setIsShowLocation] = useState(false);
+
+  const [isJy, setIsJy] = useState(false);
+
   const imgList = [
     `/images/img-1.jpeg`,
     `/images/img-2.JPG`,
@@ -60,6 +64,24 @@ export default function Home() {
 
   const handlePlayAudio = () => {
     player.current.audio.current.play();
+  };
+
+  const handleCheckJy = () => {
+    if (isShowLocation) return;
+    Modal.confirm({
+      title: "지엽 확인",
+      content: "지엽이냐??",
+      cancelText: "지엽이 아니야",
+      okText: "지엽이야",
+      onOk: () => {
+        setIsShowLocation(true);
+        setIsJy(true);
+      },
+      onCancel: () => {
+        setIsShowLocation(true);
+        setIsJy(false);
+      },
+    });
   };
 
   return (
@@ -1651,26 +1673,37 @@ export default function Home() {
             style={{ marginLeft: `${snowLocation()}px` }}
           />
         </div>
-        <p className={styles.title}>모바일 초대장</p>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <img
-            style={{ height: "300px" }}
-            src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEyMjRfNDIg%2FMDAxNjcxODA4NTY3NjEy.U3EY8W8uEQP2RW86tsSemishQUiD2AaZG0zmRdMRg1wg.QKSfay3rH0gdnCTYW0_T9efKsEa1U0DGbKjyAjaHVEog.JPEG.jyjy2026%2F5C67BA76-0605-4F42-A21C-1C94A38EB2A1_1_105_c.jpeg&type=sc960_832"
-            alt=""
-          />
+        <div>
+          <p className={styles.title}>모바일 초대장</p>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              style={{ height: "300px" }}
+              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEyMjRfNDIg%2FMDAxNjcxODA4NTY3NjEy.U3EY8W8uEQP2RW86tsSemishQUiD2AaZG0zmRdMRg1wg.QKSfay3rH0gdnCTYW0_T9efKsEa1U0DGbKjyAjaHVEog.JPEG.jyjy2026%2F5C67BA76-0605-4F42-A21C-1C94A38EB2A1_1_105_c.jpeg&type=sc960_832"
+              alt=""
+            />
+          </div>
+          <p className={styles.content}>일시 : 2023년 12월 24일 ~ 25일</p>
+          <p
+            className={styles.content}
+            style={!isShowLocation ? { cursor: "pointer" } : {}}
+            onClick={handleCheckJy}
+          >
+            장소 :{" "}
+            {!isShowLocation
+              ? "?????? <- 클릭"
+              : isJy
+              ? `비밀~`
+              : `서울 영등포구 시흥대로 625, 102동 1505호`}
+          </p>
+          <br />
+          <p className={styles.content}>
+            준비물 리스트
+            <br />
+            1. 일주일 전부터 금주
+            <br />
+            2. 강인한 정신력
+          </p>
         </div>
-        <p className={styles.content}>일시 : 2023년 12월 24일 ~ 25일</p>
-        <p className={styles.content}>
-          장소 : 서울 영등포구 시흥대로 625, 102동 1505호
-        </p>
-        <br />
-        <p className={styles.content}>
-          준비물 리스트
-          <br />
-          1. 일주일 전부터 금주
-          <br />
-          2. 강인한 정신력
-        </p>
       </div>
       <div style={{ position: "relative" }}>
         <div className={styles.videoBox}>
@@ -3378,6 +3411,7 @@ export default function Home() {
           handlePlayAudio();
           setIsShowModal(false);
         }}
+        closeIcon={false}
         onCancel={() => console.log()}
       >
         <p style={{ fontSize: "30px" }}>놀 준비 됬냐?</p>
