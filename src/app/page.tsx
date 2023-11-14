@@ -1,6 +1,6 @@
 "use client";
 
-import { Image, Modal } from "antd";
+import { Image, Input, InputRef, Modal, message } from "antd";
 import styles from "./page.module.css";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
@@ -8,11 +8,14 @@ import AudioPlayer from "react-h5-audio-player";
 import Head from "next/head";
 
 export default function Home() {
+  const [messageApi, contextHolder] = message.useMessage();
   const [isShowModal, setIsShowModal] = useState(false);
 
   const [isRendered, setIsRendered] = useState(false);
 
   const [isShowLocation, setIsShowLocation] = useState(false);
+
+  const [birth, setBirth] = useState("");
 
   const [isJy, setIsJy] = useState(false);
 
@@ -66,18 +69,46 @@ export default function Home() {
     player.current.audio.current.play();
   };
 
+  const inputRef = useRef<InputRef>(null);
+
   const handleCheckJy = () => {
     if (isShowLocation) return;
-    Modal.confirm({
-      title: "지엽 확인",
-      content: "지엽이냐??",
-      cancelText: "지엽이 아니야",
-      okText: "지엽이야",
+    Modal.info({
+      title: "생일을 입력하세요 (지엽인지 확인)",
+      content: (
+        <>
+          <p style={{ paddingBottom: "20px" }}>ex)0806</p>
+          <Input ref={inputRef} maxLength={4}></Input>
+        </>
+      ),
+
+      okText: "확인",
       onOk: () => {
-        setIsShowLocation(true);
-        setIsJy(true);
+        const value = inputRef?.current?.input?.value;
+
+        if (value === "1015") {
+          setIsShowLocation(true);
+          setIsJy(true);
+          messageApi.open({
+            type: "error",
+            content: "지엽 하이",
+          });
+        } else if (value === "0127" || value === "1231" || value === "0105") {
+          setIsShowLocation(true);
+          setIsJy(false);
+          messageApi.open({
+            type: "success",
+            content: "환영합니다.",
+          });
+        }
+
+        messageApi.open({
+          type: "warning",
+          content: "초대된 사람이 아닙니다.",
+        });
       },
       onCancel: () => {
+        const value = inputRef?.current?.input?.value;
         setIsShowLocation(true);
         setIsJy(false);
       },
