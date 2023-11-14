@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import AudioPlayer from "react-h5-audio-player";
+import Head from "next/head";
 
 export default function Home() {
   const [isShowModal, setIsShowModal] = useState(false);
@@ -63,6 +64,10 @@ export default function Home() {
 
   return (
     <main className={styles.main} style={{ backgroundColor: "#2b2928" }}>
+      <Head>
+        <title>보라종일이네 집들이</title>
+        <meta property="og:title" content="보라종일이네 집들이" key="title" />
+      </Head>
       <div>
         <div className={styles.snowBack}>
           <div
@@ -1669,7 +1674,7 @@ export default function Home() {
       </div>
       <div style={{ position: "relative" }}>
         <div className={styles.videoBox}>
-          <video className={styles.video} muted autoPlay loop>
+          <video className={styles.video} controls>
             <source src={`/images/we_video.mp4`} />
           </video>
         </div>
@@ -3389,10 +3394,15 @@ export default function Home() {
   );
 }
 
-const snowComp = () => {
-  return <div className={styles.snow} />;
-};
-
 const AntdImage = styled(Image)`
   height: 100% !important;
+  z-index: 999;
+
+  .ant-image-mask {
+    z-index: 999;
+  }
+
+  .ant-image-img {
+    z-index: 999;
+  }
 `;

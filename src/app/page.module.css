@@ -22,6 +22,7 @@
 }
 
 .videoBox {
+  z-index: 999;
   padding-top: 80px;
   display: flex;
   justify-content: center;
@@ -29,20 +30,21 @@
 }
 
 .video {
+  z-index: 999;
   max-width: 400px;
   width: 100%;
 }
 
 .imgBox {
+  z-index: 999;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-bottom: 50px;
-
-
 }
 
 .isPc {
+  z-index: 999;
   display: flex;
   flex-direction: row;
 }
@@ -53,14 +55,17 @@
 }
 
 .isMobile {
+  z-index: 999;
   display: none;
 }
 
 .imgComponent {
+  z-index: 999;
   padding: 10px;
 }
 
 .mobildeImgBox {
+  z-index: 999;
   display: flex;
   width: 100%;
 }
@@ -97,6 +102,7 @@
   max-width: 680px;
   overflow: hidden;
   margin-left: -2rem;
+  z-index: 0;
 
 }
 
