@@ -41,6 +41,7 @@ export default function Home() {
   };
 
   const snowLocation = () => {
+    if (typeof window === "undefined") return;
     const screenWidth = window.innerWidth > 680 ? 680 : window.innerWidth;
     return Math.floor(Math.random() * screenWidth);
   };
