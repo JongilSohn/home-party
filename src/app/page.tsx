@@ -3414,7 +3414,7 @@ export default function Home() {
         closeIcon={false}
         onCancel={() => console.log()}
       >
-        <p style={{ fontSize: "30px" }}>놀 준비 됬냐?</p>
+        <p style={{ fontSize: "30px" }}>놀 준비 됐냐?</p>
       </Modal>
 
       <AudioPlayer
