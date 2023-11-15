@@ -1750,11 +1750,15 @@ export default function Home() {
             onClick={handleCheckJy}
           >
             장소 :{" "}
-            {!isShowLocation
-              ? "?????? <- 클릭"
-              : isJy
-              ? `비밀~`
-              : `서울 영등포구 시흥대로 625, 102동 1505호`}
+            {!isShowLocation ? (
+              <>
+                ?????? {"<-"} <span style={{ color: "red" }}>클릭</span>
+              </>
+            ) : isJy ? (
+              `비밀~`
+            ) : (
+              `서울 영등포구 시흥대로 625, 102동 1505호`
+            )}
           </p>
           <br />
           <p className={styles.content}>
