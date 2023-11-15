@@ -1,6 +1,6 @@
 "use client";
 
-import { Image, Input, InputRef, Modal, message } from "antd";
+import { Image, Input, InputRef, Modal, message, Carousel } from "antd";
 import styles from "./page.module.css";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
@@ -11,6 +11,8 @@ export default function Home() {
   const [messageApi, contextHolder] = message.useMessage();
   const [isShowModal, setIsShowModal] = useState(false);
 
+  const [isShowSlickModal, setIsShowSlickModal] = useState(false);
+
   const [isRendered, setIsRendered] = useState(false);
 
   const [isShowLocation, setIsShowLocation] = useState(false);
@@ -18,6 +20,14 @@ export default function Home() {
   const [birth, setBirth] = useState("");
 
   const [isJy, setIsJy] = useState(false);
+
+  useEffect(() => {
+    if (isShowSlickModal || isShowModal) {
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "unset";
+    }
+  }, [isShowSlickModal, isShowModal]);
 
   const imgList = [
     `/images/img-1.jpeg`,
@@ -100,12 +110,12 @@ export default function Home() {
             type: "success",
             content: "환영합니다.",
           });
+        } else {
+          messageApi.open({
+            type: "warning",
+            content: "초대된 사람이 아닙니다.",
+          });
         }
-
-        messageApi.open({
-          type: "warning",
-          content: "초대된 사람이 아닙니다.",
-        });
       },
       onCancel: () => {
         const value = inputRef?.current?.input?.value;
@@ -115,12 +125,32 @@ export default function Home() {
     });
   };
 
+  const contentStyle: React.CSSProperties = {
+    height: "160px",
+    color: "#fff",
+    lineHeight: "160px",
+    textAlign: "center",
+    background: "#364d79",
+  };
+
+  const slcikRef = useRef<any>(null);
+
+  const handleClickImg = (index: number) => {
+    slcikRef?.current?.goTo(index);
+    setIsShowSlickModal(true);
+  };
+
   return (
     <main className={styles.main} style={{ backgroundColor: "#2b2928" }}>
       <Head>
         <title>보라종일이네 집들이</title>
         <meta property="og:title" content="보라종일이네 집들이" key="title" />
+        <meta
+          name="viewport"
+          content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
+        />
       </Head>
+      {contextHolder}
       <div>
         <div className={styles.snowBack}>
           <div
@@ -1705,7 +1735,7 @@ export default function Home() {
           />
         </div>
         <div>
-          <p className={styles.title}>모바일 초대장</p>
+          <p className={styles.title}>House warming & Christmas Party</p>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img
               style={{ height: "300px" }}
@@ -3325,7 +3355,27 @@ export default function Home() {
           />
         </div>
         <div className={`${styles.imgBox} ${styles.isPc}`}>
-          <Image.PreviewGroup
+          <ImgComp
+            className={styles.imgComponent}
+            src={imgList[0]}
+            onClick={() => handleClickImg(0)}
+          />
+          <ImgComp
+            className={styles.imgComponent}
+            src={imgList[10]}
+            onClick={() => handleClickImg(10)}
+          />
+          <ImgComp
+            className={styles.imgComponent}
+            src={imgList[11]}
+            onClick={() => handleClickImg(11)}
+          />
+          <ImgComp
+            className={styles.imgComponent}
+            src={imgList[3]}
+            onClick={() => handleClickImg(3)}
+          />
+          {/* <Image.PreviewGroup
             items={imgList}
             preview={{
               countRender: (current) => imgList[current - 1],
@@ -3352,10 +3402,31 @@ export default function Home() {
               width="100%"
               src={imgList[3]}
             />
-          </Image.PreviewGroup>
+          </Image.PreviewGroup> */}
         </div>
         <div className={`${styles.imgBox} ${styles.isPc}`}>
-          <Image.PreviewGroup
+          <ImgComp
+            className={styles.imgComponent}
+            src={imgList[15]}
+            onClick={() => handleClickImg(15)}
+          />
+          <ImgComp
+            className={styles.imgComponent}
+            src={imgList[13]}
+            onClick={() => handleClickImg(13)}
+          />
+          <ImgComp
+            className={styles.imgComponent}
+            src={imgList[16]}
+            onClick={() => handleClickImg(16)}
+          />
+          <ImgComp
+            className={styles.imgComponent}
+            src={imgList[5]}
+            onClick={() => handleClickImg(5)}
+          />
+
+          {/* <Image.PreviewGroup
             items={imgList}
             preview={{
               countRender: (current) => imgList[current - 2],
@@ -3382,11 +3453,21 @@ export default function Home() {
               width="100%"
               src={imgList[5]}
             />
-          </Image.PreviewGroup>
+          </Image.PreviewGroup> */}
         </div>
         <div className={`${styles.imgBox} ${styles.isMobile}`}>
           <div className={styles.mobildeImgBox}>
-            <Image.PreviewGroup
+            <ImgComp
+              className={styles.imgComponent}
+              src={imgList[0]}
+              onClick={() => handleClickImg(0)}
+            />
+            <ImgComp
+              className={styles.imgComponent}
+              src={imgList[10]}
+              onClick={() => handleClickImg(10)}
+            />
+            {/* <Image.PreviewGroup
               items={imgList}
               preview={{
                 countRender: (current) => imgList[current - 2],
@@ -3405,10 +3486,20 @@ export default function Home() {
                   src={imgList[10]}
                 />
               </div>
-            </Image.PreviewGroup>
+            </Image.PreviewGroup> */}
           </div>
           <div className={styles.mobildeImgBox}>
-            <Image.PreviewGroup
+            <ImgComp
+              className={styles.imgComponent}
+              src={imgList[11]}
+              onClick={() => handleClickImg(11)}
+            />
+            <ImgComp
+              className={styles.imgComponent}
+              src={imgList[3]}
+              onClick={() => handleClickImg(3)}
+            />
+            {/* <Image.PreviewGroup
               items={imgList}
               preview={{
                 countRender: (current) => imgList[current - 2],
@@ -3427,10 +3518,71 @@ export default function Home() {
                   src={imgList[3]}
                 />
               </div>
-            </Image.PreviewGroup>
+            </Image.PreviewGroup> */}
           </div>
         </div>
       </div>
+      <SlickModal
+        open={isShowSlickModal}
+        closeIcon={false}
+        onCancel={() => setIsShowSlickModal(false)}
+        closable={true}
+        maskClosable={true}
+      >
+        <Carousel effect="fade" ref={slcikRef}>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[0]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[1]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[2]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[3]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[4]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[5]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[6]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[7]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[8]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[9]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[10]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[11]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[12]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[13]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[14]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[15]} />
+          </div>
+          <div>
+            <ImgComp className={styles.imgComponent} src={imgList[16]} />
+          </div>
+        </Carousel>
+      </SlickModal>
       <Modal
         open={isShowModal}
         title="너 T발C야?"
@@ -3469,5 +3621,52 @@ const AntdImage = styled(Image)`
 
   .ant-image-img {
     z-index: 999;
+  }
+`;
+
+const ImgComp = ({
+  src,
+  onClick,
+  className,
+}: {
+  src: string;
+  onClick?: () => void;
+  className?: string;
+}) => {
+  return (
+    <div
+      style={{ width: "100%", cursor: "pointer" }}
+      className={styles.imgComponent}
+      onClick={onClick}
+    >
+      <img
+        style={{ height: "100%" }}
+        className={styles.imgTag}
+        src={src}
+        alt=""
+      ></img>
+    </div>
+  );
+};
+
+const SlickModal = styled(Modal)`
+  .ant-modal-content {
+    padding: 0 !important;
+
+    div {
+      padding: 0;
+
+      img {
+        padding: 0;
+      }
+    }
+  }
+
+  .ant-modal-footer {
+    display: none;
+  }
+
+  .ant-modal-content {
+    background: none !important;
   }
 `;

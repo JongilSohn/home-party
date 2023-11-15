@@ -18,13 +18,13 @@
 
 .content {
   position: relative;
-  z-index: 9999;
+  z-index: 2;
   font-size: 40px;
   text-align: center;
 }
 
 .videoBox {
-  z-index: 999;
+  z-index: 2;
   padding-top: 80px;
   display: flex;
   justify-content: center;
@@ -32,13 +32,13 @@
 }
 
 .video {
-  z-index: 999;
+  z-index: 2;
   max-width: 400px;
   width: 100%;
 }
 
 .imgBox {
-  z-index: 999;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,7 +46,7 @@
 }
 
 .isPc {
-  z-index: 999;
+  z-index: 2;
   display: flex;
   flex-direction: row;
 }
@@ -57,17 +57,17 @@
 }
 
 .isMobile {
-  z-index: 999;
+  z-index: 2;
   display: none;
 }
 
 .imgComponent {
-  z-index: 999;
+  z-index: 2;
   padding: 10px;
 }
 
 .mobildeImgBox {
-  z-index: 999;
+  z-index: 2;
   display: flex;
   width: 100%;
 }
